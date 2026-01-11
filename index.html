@@ -7,16 +7,16 @@
 
   <style>
     :root {
-      --bg1: #fde1ff;
-      --bg2: #e3f1ff;
-      --bg3: #fff6dc;
+      --bg1: #ff746c;   /* pastel red */
+      --bg2: #ffd2e0;   /* light pink */
+      --bg3: #fff3d1;   /* soft yellow */
       --card: #ffffff;
-      --accent1: #ff8fb1;
-      --accent2: #8e9dff;
-      --accent3: #ffc75f;
-      --text: #22243a;
-      --muted: #666a8c;
-      --shadow: 0 14px 30px rgba(0,0,0,0.10);
+      --accent1: #ff6961; /* main red */
+      --accent2: #ff8fb1; /* pink */
+      --accent3: #8e9dff; /* soft purple */
+      --text: #241b2a;
+      --muted: #6b6078;
+      --shadow: 0 14px 30px rgba(0,0,0,0.12);
     }
 
     * {
@@ -32,7 +32,7 @@
         radial-gradient(circle at top left, var(--bg1) 0, transparent 55%),
         radial-gradient(circle at top right, var(--bg2) 0, transparent 55%),
         radial-gradient(circle at bottom, var(--bg3) 0, transparent 55%),
-        #f9f4ff;
+        #fff5f8;
       color: var(--text);
       display: flex;
       align-items: center;
@@ -43,7 +43,7 @@
     .app {
       width: 100%;
       max-width: 960px;
-      background: linear-gradient(135deg, #ffffffee, #f2f3ffdd);
+      background: linear-gradient(135deg, #ffffffee, #fff0f5dd);
       border-radius: 26px;
       box-shadow: var(--shadow);
       padding: 22px 22px 30px;
@@ -59,11 +59,11 @@
       height: 220px;
       border-radius: 40% 60% 60% 40%;
       filter: blur(30px);
-      opacity: 0.45;
+      opacity: 0.55;
       z-index: -1;
     }
-    .blob.pink { background: #ff8fb1; top: -80px; right: -80px; }
-    .blob.blue { background: #8e9dff; bottom: -90px; left: -70px; }
+    .blob.pink { background: #ff6961; top: -80px; right: -80px; }
+    .blob.blue { background: #ffb3c6; bottom: -90px; left: -70px; }
 
     header {
       text-align: center;
@@ -88,7 +88,7 @@
       gap: 6px;
       padding: 5px 12px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.85);
+      background: rgba(255,255,255,0.95);
       box-shadow: 0 8px 18px rgba(0,0,0,0.06);
       color: var(--muted);
       font-size: 0.78rem;
@@ -127,13 +127,13 @@
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: #d0d3ff;
+      background: #ffc5ce;
     }
 
     .tab-btn.active {
       background: linear-gradient(135deg, var(--accent1), var(--accent2));
       color: white;
-      box-shadow: 0 10px 22px rgba(0,0,0,0.18);
+      box-shadow: 0 10px 22px rgba(0,0,0,0.20);
       transform: translateY(-1px);
     }
 
@@ -142,7 +142,7 @@
     }
 
     .tab-btn:hover {
-      filter: brightness(1.04);
+      filter: brightness(1.05);
     }
 
     .content {
@@ -164,7 +164,7 @@
     }
 
     .card {
-      background: rgba(255,255,255,0.97);
+      background: rgba(255,255,255,0.98);
       border-radius: 20px;
       padding: 16px 16px 18px;
       box-shadow: 0 12px 26px rgba(0,0,0,0.06);
@@ -177,10 +177,10 @@
       position: absolute;
       width: 110px;
       height: 110px;
-      background: radial-gradient(circle at center, #ffe9f5, transparent 60%);
+      background: radial-gradient(circle at center, #ffe3ea, transparent 60%);
       top: -50px;
       right: -30px;
-      opacity: 0.85;
+      opacity: 0.9;
     }
 
     .card-title {
@@ -212,18 +212,18 @@
       width: 100%;
       padding: 8px 10px;
       border-radius: 10px;
-      border: 1px solid #d4daf8;
+      border: 1px solid #ffb3bf;
       font-size: 0.85rem;
       margin-bottom: 8px;
       outline: none;
-      background: #f7f7ff;
+      background: #fff7f9;
       color: var(--text);
       transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
     }
 
     input:focus, select:focus, textarea:focus {
-      border-color: var(--accent2);
-      box-shadow: 0 0 0 2px #d7ddff;
+      border-color: var(--accent1);
+      box-shadow: 0 0 0 2px #ffd0d6;
       background: #ffffff;
     }
 
@@ -242,7 +242,7 @@
       gap: 8px;
       padding: 4px;
       border-radius: 999px;
-      background: #eef0ff;
+      background: #ffe3e9;
       margin-bottom: 8px;
     }
 
@@ -264,7 +264,7 @@
 
     .radio-pill.active {
       background: #ffffff;
-      color: var(--accent2);
+      color: var(--accent1);
       box-shadow: 0 4px 10px rgba(0,0,0,0.07);
     }
 
@@ -272,10 +272,10 @@
       margin-top: 6px;
       font-size: 0.83rem;
       color: var(--muted);
-      background: #f3f4ff;
+      background: #fff1f3;
       border-radius: 12px;
       padding: 9px 11px;
-      border: 1px dashed #c5caf3;
+      border: 1px dashed #ffb3bf;
       min-height: 46px;
     }
 
@@ -285,27 +285,13 @@
       color: var(--muted);
     }
 
-    .invite-banner {
-      margin-top: 10px;
-      padding: 9px 11px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #ffe3f0, #ffeecb);
-      font-size: 0.82rem;
-      color: #553344;
-      display: none;
-    }
-
-    .invite-banner.show {
-      display: block;
-    }
-
     .timer-main {
       font-size: 1.4rem;
       margin-top: 2px;
     }
 
     .timer-main span {
-      color: var(--accent2);
+      color: var(--accent1);
       font-weight: 600;
     }
 
@@ -336,11 +322,11 @@
       border-radius: 999px;
       padding: 6px 12px;
       font-size: 0.78rem;
-      background: linear-gradient(135deg, var(--accent2), var(--accent1));
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
       color: white;
       cursor: pointer;
       transition: all 0.2s;
-      box-shadow: 0 7px 16px rgba(0,0,0,0.15);
+      box-shadow: 0 7px 16px rgba(0,0,0,0.18);
     }
 
     .btn-small:hover {
@@ -349,7 +335,7 @@
     }
 
     .btn-small.secondary {
-      background: #e7e9ff;
+      background: #ffe3eb;
       color: var(--muted);
       box-shadow: none;
     }
@@ -357,7 +343,7 @@
     .note-preview {
       margin-top: 10px;
       font-size: 0.85rem;
-      background: #f7f7ff;
+      background: #fff6f8;
       padding: 8px 10px;
       border-radius: 10px;
       color: var(--text);
@@ -399,7 +385,7 @@
 
     <header>
       <h1>Unund &amp; Nomuunzul</h1>
-      <p>One colorful page for our movies, our time, and our notes.</p>
+      <p>One bright page for our movies, our time, and our notes.</p>
       <div class="pill">
         <span class="flag">🇨🇦</span>
         <span>Vancouver</span>
@@ -428,7 +414,7 @@
         <div class="card">
           <div class="card-title">Movie night planner</div>
           <div class="card-subtitle">
-            Pick a time, choose who’s inviting, and see the time for both sides.
+            Pick a time, choose who’s inviting, and send the invite straight to email.
           </div>
 
           <div class="movie-grid">
@@ -468,18 +454,14 @@
               </select>
 
               <p class="movie-notice">
-                When everything is filled, an invite message will pop up here and can also show as a browser notification (if allowed).
+                When everything is filled, you can send the invite directly to the other person’s Gmail.
               </p>
             </div>
 
             <div>
-              <label>Our plan</label>
+              <label>Our plan (preview)</label>
               <div class="movie-output" id="movie-output">
                 Fill the movie, date, and time to see the plan for Vancouver and Seoul.
-              </div>
-
-              <div class="invite-banner" id="invite-banner">
-                <!-- Filled by JS -->
               </div>
 
               <div style="margin-top:8px; display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
@@ -558,9 +540,9 @@
 
   <script>
     // ------------------ CONFIG: FILL WITH YOUR REAL VALUES ------------------
-    const EMAILJS_SERVICE_ID = "service_tpdupss";        // your real service id
-    const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";      // replace with template_xxx
-    const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";        // your public key
+    const EMAILJS_SERVICE_ID = "service_tpdupss";      // your real service id
+    const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";    // e.g. template_xxx
+    const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";      // your public key
 
     (function() {
       if (EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY") {
@@ -606,7 +588,6 @@
     const timeInput = document.getElementById('time');
     const vibeSelect = document.getElementById('vibe');
     const movieOutput = document.getElementById('movie-output');
-    const inviteBanner = document.getElementById('invite-banner');
     const movieSendBtn = document.getElementById('movie-send');
     const movieStatus = document.getElementById('movie-status');
 
@@ -615,21 +596,7 @@
       return checked ? checked.value : "Someone";
     }
 
-    function showBrowserNotification(title, body) {
-      if (!("Notification" in window)) return;
-
-      if (Notification.permission === "granted") {
-        new Notification(title, { body });
-      } else if (Notification.permission !== "denied") {
-        Notification.requestPermission().then(permission => {
-          if (permission === "granted") {
-            new Notification(title, { body });
-          }
-        });
-      }
-    }
-
-    function buildMoviePlan(inviter) {
+    function buildMoviePlan() {
       const title = movieTitleInput.value.trim();
       const date = dateInput.value;
       const time = timeInput.value;
@@ -656,20 +623,14 @@
         vDateText,
         vTimeText,
         sDateText,
-        sTimeText,
-        vancouverDate,
-        seoulDate
+        sTimeText
       };
     }
 
-    function updateMovieInvite() {
-      inviteBanner.classList.remove('show');
-      inviteBanner.textContent = "";
+    function updateMoviePreview() {
       movieStatus.textContent = "";
 
-      const inviter = getInviterName();
-      const plan = buildMoviePlan(inviter);
-
+      const plan = buildMoviePlan();
       if (!plan) {
         movieOutput.textContent = "Pick a date and time to see the plan.";
         return;
@@ -686,27 +647,16 @@
         `${sDateText} at ${sTimeText} (Seoul) — ${vibe}.`;
 
       movieOutput.textContent = planText;
-
-      const inviteText =
-        `You have been invited to a movie night by ${inviter}. ` +
-        `Movie: ${movieName}. Vancouver: ${vDateText} ${vTimeText}. ` +
-        `Seoul: ${sDateText} ${sTimeText}.`;
-
-      inviteBanner.textContent = inviteText;
-      inviteBanner.classList.add('show');
-
-      showBrowserNotification("Movie night invite", inviteText);
     }
 
-    movieTitleInput.addEventListener('input', updateMovieInvite);
-    dateInput.addEventListener('change', updateMovieInvite);
-    timeInput.addEventListener('change', updateMovieInvite);
-    vibeSelect.addEventListener('change', updateMovieInvite);
+    movieTitleInput.addEventListener('input', updateMoviePreview);
+    dateInput.addEventListener('change', updateMoviePreview);
+    timeInput.addEventListener('change', updateMoviePreview);
+    vibeSelect.addEventListener('change', updateMoviePreview);
 
-    // send movie invite email
     movieSendBtn.addEventListener('click', () => {
       const inviter = getInviterName();
-      const plan = buildMoviePlan(inviter);
+      const plan = buildMoviePlan();
 
       if (!plan) {
         movieStatus.textContent = "Pick a date and time first.";
