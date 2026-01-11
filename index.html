@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Unund &amp; Nomuunzul</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --bg: #f7f4ff;
+      --card: #ffffff;
+      --accent: #8e9dff;
+      --accent-dark: #5a6bff;
+      --text: #22243a;
+      --muted: #6b6f90;
+      --shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #e5e9ff 0, #f7f4ff 60%, #fdfbff 100%);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 900px;
+      background: linear-gradient(135deg, #ffffffd8, #f0f2ffeb);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 20px 20px 28px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.9);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .floating-heart {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      background: #b9c6ff88;
+      border-radius: 999px 999px 0 999px;
+      transform: rotate(-45deg);
+      top: -18px;
+      right: 40px;
+      animation: floatHeart 7s ease-in-out infinite;
+      opacity: 0.4;
+    }
+
+    .floating-heart::before,
+    .floating-heart::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      background: #b9c6ff88;
+      border-radius: 50%;
+    }
+
+    .floating-heart::before {
+      top: -9px;
+      left: 0;
+    }
+
+    .floating-heart::after {
+      left: 9px;
+      top: 0;
+    }
+
+    @keyframes floatHeart {
+      0% { transform: translateY(0) rotate(-45deg); opacity: 0.3; }
+      50% { transform: translateY(10px) rotate(-45deg); opacity: 0.7; }
+      100% { transform: translateY(0) rotate(-45deg); opacity: 0.3; }
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      letter-spacing: 0.02em;
+    }
+
+    header p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #e3e6ff;
+      color: var(--muted);
+      font-size: 0.76rem;
+      margin-top: 10px;
+    }
+
+    .pill span.flag {
+      font-size: 0.9rem;
+    }
+
+    nav {
+      margin: 18px auto 14px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      border: none;
+      outline: none;
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: #e4e7ff;
+      color: var(--muted);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      color: white;
+      box-shadow: 0 7px 18px rgba(90,107,255,0.45);
+      transform: translateY(-1px);
+    }
+
+    .tab-btn:hover {
+      filter: brightness(1.05);
+    }
+
+    .content {
+      margin-top: 8px;
+    }
+
+    .view {
+      display: none;
+      animation: fadeIn 0.35s ease;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 18px;
+      padding: 16px 16px 18px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      width: 90px;
+      height: 90px;
+      background: radial-gradient(circle at center, #e4e7ff, transparent 60%);
+      top: -40px;
+      right: -20px;
+      opacity: 0.9;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      margin-bottom: 4px;
+    }
+
+    .card-subtitle {
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .movie-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px;
+      margin-top: 6px;
+    }
+
+    label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid #d4daf8;
+      font-size: 0.85rem;
+      margin-bottom: 8px;
+      outline: none;
+      background: #f9f9ff;
+      color: var(--text);
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px #d7ddff;
+    }
+
+    .inline {
+      display: flex;
+      gap: 8px;
+    }
+
+    .inline > div {
+      flex: 1;
+    }
+
+    .movie-output {
+      margin-top: 6px;
+      font-size: 0.83rem;
+      color: var(--muted);
+      background: #f3f4ff;
+      border-radius: 10px;
+      padding: 8px 10px;
+    }
+
+    .timer-main {
+      font-size: 1.4rem;
+      margin-top: 2px;
+    }
+
+    .timer-main span {
+      color: var(--accent-dark);
+      font-weight: 600;
+    }
+
+    .timer-extra {
+      margin-top: 6px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .notes-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.76rem;
+      color: var(--muted);
+      margin-top: 4px;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .btn-small {
+      border: none;
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 0.75rem;
+      background: #e7e9ff;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-small:hover {
+      background: #dde0ff;
+    }
+
+    .note-preview {
+      margin-top: 10px;
+      font-size: 0.85rem;
+      background: #f7f7ff;
+      padding: 8px 10px;
+      border-radius: 10px;
+      color: var(--text);
+      white-space: pre-wrap;
+    }
+
+    footer {
+      margin-top: 16px;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    footer span {
+      color: var(--accent-dark);
+    }
+
+    @media (max-width: 600px) {
+      .app {
+        padding: 16px 14px 22px;
+        border-radius: 20px;
+      }
+      header h1 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="floating-heart"></div>
+
+    <header>
+      <h1>Unund &amp; Nomuunzul</h1>
+      <p>One page for our movies, our time, and our notes.</p>
+      <div class="pill">
+        <span class="flag">🇨🇦</span>
+        <span>Vancouver</span>
+        <span>·</span>
+        <span class="flag">🇰🇷</span>
+        <span>Seoul</span>
+        <span>· 17 hours apart</span>
+      </div>
+    </header>
+
+    <nav>
+      <button class="tab-btn active" data-view="movie">🎬 Movie night</button>
+      <button class="tab-btn" data-view="timer">⏳ Time together</button>
+      <button class="tab-btn" data-view="notes">📝 Daily note</button>
+    </nav>
+
+    <main class="content">
+      <!-- MOVIE NIGHT VIEW -->
+      <section id="view-movie" class="view active">
+        <div class="card">
+          <div class="card-title">Movie night planner</div>
+          <div class="card-subtitle">
+            Pick a time and see how it looks for both of you.
+          </div>
+
+          <div class="movie-grid">
+            <div>
+              <label for="movie-title">Movie / show</label>
+              <input id="movie-title" type="text" placeholder="eg. Your Name, La La Land..." />
+
+              <div class="inline">
+                <div>
+                  <label for="date">Date (Vancouver)</label>
+                  <input id="date" type="date" />
+                </div>
+                <div>
+                  <label for="time">Time in Vancouver</label>
+                  <input id="time" type="time" />
+                </div>
+              </div>
+
+              <label for="vibe">Note</label>
+              <select id="vibe">
+                <option value="let's relax and just enjoy it">Let’s relax and just enjoy it</option>
+                <option value="let's laugh a lot tonight">Let’s laugh a lot tonight</option>
+                <option value="let's talk after the movie">Let’s talk after the movie</option>
+                <option value="comfort rewatch kind of night">Comfort rewatch kind of night</option>
+              </select>
+            </div>
+
+            <div>
+              <label>Our plan</label>
+              <div class="movie-output" id="movie-output">
+                Once you fill in the details, this will show a simple invite you can send.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TIMER VIEW -->
+      <section id="view-timer" class="view">
+        <div class="card">
+          <div class="card-title">Time since we started</div>
+          <div class="card-subtitle">
+            A quiet counter of how long this has been us.
+          </div>
+
+          <div id="since-container">
+            <p class="timer-main" id="timer-main">We have been together for …</p>
+            <p class="timer-extra" id="timer-extra"></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- NOTES VIEW -->
+      <section id="view-notes" class="view">
+        <div class="card">
+          <div class="card-title">Today’s note</div>
+          <div class="card-subtitle">
+            A small place to write one thing you want the other person to know today.
+          </div>
+
+          <label for="note-text">Your note</label>
+          <textarea id="note-text" placeholder="Example: Today I really wished we could walk home together."></textarea>
+
+          <div class="notes-meta">
+            <div id="note-date"></div>
+            <button class="btn-small" type="button" id="note-clear">Clear note</button>
+          </div>
+
+          <div class="note-preview" id="note-preview">
+            What you type above will also appear here like a little message.
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      Built just for <span>Unund &amp; Nomuunzul</span>.
+    </footer>
+  </div>
+
+  <script>
+    // ---------- TABS ----------
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const views = document.querySelectorAll('.view');
+
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.getAttribute('data-view');
+
+        tabButtons.forEach(b => b.classList.remove('active'));
+        views.forEach(v => v.classList.remove('active'));
+
+        btn.classList.add('active');
+        document.getElementById('view-' + target).classList.add('active');
+      });
+    });
+
+    // ---------- MOVIE NIGHT ----------
+    const movieTitleInput = document.getElementById('movie-title');
+    const dateInput = document.getElementById('date');
+    const timeInput = document.getElementById('time');
+    const vibeSelect = document.getElementById('vibe');
+    const movieOutput = document.getElementById('movie-output');
+
+    function updateMovieInvite() {
+      const title = movieTitleInput.value.trim();
+      const date = dateInput.value;
+      const time = timeInput.value;
+      const vibe = vibeSelect.value;
+
+      if (!date || !time) {
+        movieOutput.textContent = "Pick a date and time to see the plan.";
+        return;
+      }
+
+      const vancouverDate = new Date(date + 'T' + time + ':00');
+      const seoulDate = new Date(vancouverDate.getTime() + 17 * 60 * 60 * 1000); // 17h ahead[web:14]
+
+      const optionsDate = { year: 'numeric', month: 'short', day: 'numeric' };
+      const optionsTime = { hour: '2-digit', minute: '2-digit' };
+
+      const vDateText = vancouverDate.toLocaleDateString('en-CA', optionsDate);
+      const vTimeText = vancouverDate.toLocaleTimeString('en-CA', optionsTime);
+      const sDateText = seoulDate.toLocaleDateString('en-CA', optionsDate);
+      const sTimeText = seoulDate.toLocaleTimeString('en-CA', optionsTime);
+
+      const movieName = title || "our movie";
+
+      movieOutput.textContent =
+        `Plan: ${movieName} on ${vDateText} at ${vTimeText} (Vancouver) / ` +
+        `${sDateText} at ${sTimeText} (Seoul) — ${vibe}.`;
+    }
+
+    movieTitleInput.addEventListener('input', updateMovieInvite);
+    dateInput.addEventListener('change', updateMovieInvite);
+    timeInput.addEventListener('change', updateMovieInvite);
+    vibeSelect.addEventListener('change', updateMovieInvite);
+
+    // ---------- TIMER ----------
+    const timerMain = document.getElementById('timer-main');
+    const timerExtra = document.getElementById('timer-extra');
+
+    // Your real anniversary date: 2025-07-19
+    const anniversaryDate = new Date('2025-07-19T00:00:00');
+
+    function updateTimer() {
+      const now = new Date();
+      const diffMs = now - anniversaryDate;
+
+      if (diffMs <= 0) {
+        timerMain.textContent = "The counter will start once this date arrives.";
+        timerExtra.textContent = "";
+        return;
+      }
+
+      const diffDaysTotal = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+      const diffYears = Math.floor(diffDaysTotal / 365);
+      const diffMonths = Math.floor((diffDaysTotal % 365) / 30);
+      const diffDays = diffDaysTotal - diffYears * 365 - diffMonths * 30;
+
+      timerMain.innerHTML =
+        `Unund &amp; Nomuunzul have been together for <span>${diffDaysTotal}</span> days.`;
+
+      const parts = [];
+      if (diffYears) parts.push(`${diffYears} year${diffYears > 1 ? 's' : ''}`);
+      if (diffMonths) parts.push(`${diffMonths} month${diffMonths > 1 ? 's' : ''}`);
+      if (diffDays || (!diffYears && !diffMonths)) {
+        parts.push(`${diffDays} day${diffDays !== 1 ? 's' : ''}`);
+      }
+
+      timerExtra.textContent = parts.join(", ");
+    }
+
+    updateTimer();
+    setInterval(updateTimer, 60 * 1000);
+
+    // ---------- NOTES ----------
+    const noteText = document.getElementById('note-text');
+    const notePreview = document.getElementById('note-preview');
+    const noteDate = document.getElementById('note-date');
+    const noteClear = document.getElementById('note-clear');
+
+    function updateNoteDate() {
+      const now = new Date();
+      const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+      noteDate.textContent = now.toLocaleDateString('en-CA', options);
+    }
+
+    function updateNotePreview() {
+      const value = noteText.value.trim();
+      notePreview.textContent = value || "What you type above will also appear here like a little message.";
+    }
+
+    noteText.addEventListener('input', updateNotePreview);
+    noteClear.addEventListener('click', () => {
+      noteText.value = "";
+      updateNotePreview();
+    });
+
+    updateNoteDate();
+    updateNotePreview();
+  </script>
+</body>
+</html>
