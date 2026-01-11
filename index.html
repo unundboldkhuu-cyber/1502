@@ -7,13 +7,16 @@
 
   <style>
     :root {
-      --bg: #f7f4ff;
+      --bg1: #fde1ff;
+      --bg2: #e3f1ff;
+      --bg3: #fff6dc;
       --card: #ffffff;
-      --accent: #8e9dff;
-      --accent-dark: #5a6bff;
+      --accent1: #ff8fb1;
+      --accent2: #8e9dff;
+      --accent3: #ffc75f;
       --text: #22243a;
-      --muted: #6b6f90;
-      --shadow: 0 10px 25px rgba(0,0,0,0.06);
+      --muted: #666a8c;
+      --shadow: 0 14px 30px rgba(0,0,0,0.10);
     }
 
     * {
@@ -25,7 +28,11 @@
 
     body {
       min-height: 100vh;
-      background: radial-gradient(circle at top, #e5e9ff 0, #f7f4ff 60%, #fdfbff 100%);
+      background:
+        radial-gradient(circle at top left, var(--bg1) 0, transparent 55%),
+        radial-gradient(circle at top right, var(--bg2) 0, transparent 55%),
+        radial-gradient(circle at bottom, var(--bg3) 0, transparent 55%),
+        #f9f4ff;
       color: var(--text);
       display: flex;
       align-items: center;
@@ -35,55 +42,28 @@
 
     .app {
       width: 100%;
-      max-width: 900px;
-      background: linear-gradient(135deg, #ffffffd8, #f0f2ffeb);
-      border-radius: 24px;
+      max-width: 960px;
+      background: linear-gradient(135deg, #ffffffee, #f2f3ffdd);
+      border-radius: 26px;
       box-shadow: var(--shadow);
-      padding: 20px 20px 28px;
-      backdrop-filter: blur(10px);
+      padding: 22px 22px 30px;
+      backdrop-filter: blur(12px);
       border: 1px solid rgba(255,255,255,0.9);
       position: relative;
       overflow: hidden;
     }
 
-    .floating-heart {
+    .blob {
       position: absolute;
-      width: 18px;
-      height: 18px;
-      background: #b9c6ff88;
-      border-radius: 999px 999px 0 999px;
-      transform: rotate(-45deg);
-      top: -18px;
-      right: 40px;
-      animation: floatHeart 7s ease-in-out infinite;
-      opacity: 0.4;
+      width: 220px;
+      height: 220px;
+      border-radius: 40% 60% 60% 40%;
+      filter: blur(30px);
+      opacity: 0.45;
+      z-index: -1;
     }
-
-    .floating-heart::before,
-    .floating-heart::after {
-      content: "";
-      position: absolute;
-      width: 18px;
-      height: 18px;
-      background: #b9c6ff88;
-      border-radius: 50%;
-    }
-
-    .floating-heart::before {
-      top: -9px;
-      left: 0;
-    }
-
-    .floating-heart::after {
-      left: 9px;
-      top: 0;
-    }
-
-    @keyframes floatHeart {
-      0% { transform: translateY(0) rotate(-45deg); opacity: 0.3; }
-      50% { transform: translateY(10px) rotate(-45deg); opacity: 0.7; }
-      100% { transform: translateY(0) rotate(-45deg); opacity: 0.3; }
-    }
+    .blob.pink { background: #ff8fb1; top: -80px; right: -80px; }
+    .blob.blue { background: #8e9dff; bottom: -90px; left: -70px; }
 
     header {
       text-align: center;
@@ -92,8 +72,8 @@
     }
 
     header h1 {
-      font-size: 1.8rem;
-      letter-spacing: 0.02em;
+      font-size: 1.9rem;
+      letter-spacing: 0.03em;
     }
 
     header p {
@@ -106,20 +86,21 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 4px 10px;
+      padding: 5px 12px;
       border-radius: 999px;
-      background: #e3e6ff;
+      background: rgba(255,255,255,0.85);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.06);
       color: var(--muted);
-      font-size: 0.76rem;
+      font-size: 0.78rem;
       margin-top: 10px;
     }
 
     .pill span.flag {
-      font-size: 0.9rem;
+      font-size: 0.95rem;
     }
 
     nav {
-      margin: 18px auto 14px;
+      margin: 20px auto 14px;
       display: flex;
       justify-content: center;
       gap: 10px;
@@ -129,27 +110,39 @@
     .tab-btn {
       border: none;
       outline: none;
-      padding: 8px 16px;
+      padding: 9px 18px;
       border-radius: 999px;
-      background: #e4e7ff;
+      background: rgba(255,255,255,0.9);
       color: var(--muted);
-      font-size: 0.85rem;
+      font-size: 0.86rem;
       cursor: pointer;
       transition: all 0.2s ease;
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+    }
+
+    .tab-btn span.dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #d0d3ff;
     }
 
     .tab-btn.active {
-      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
       color: white;
-      box-shadow: 0 7px 18px rgba(90,107,255,0.45);
+      box-shadow: 0 10px 22px rgba(0,0,0,0.18);
       transform: translateY(-1px);
     }
 
+    .tab-btn.active span.dot {
+      background: #ffffff;
+    }
+
     .tab-btn:hover {
-      filter: brightness(1.05);
+      filter: brightness(1.04);
     }
 
     .content {
@@ -171,10 +164,10 @@
     }
 
     .card {
-      background: var(--card);
-      border-radius: 18px;
+      background: rgba(255,255,255,0.97);
+      border-radius: 20px;
       padding: 16px 16px 18px;
-      box-shadow: var(--shadow);
+      box-shadow: 0 12px 26px rgba(0,0,0,0.06);
       position: relative;
       overflow: hidden;
     }
@@ -182,12 +175,12 @@
     .card::before {
       content: "";
       position: absolute;
-      width: 90px;
-      height: 90px;
-      background: radial-gradient(circle at center, #e4e7ff, transparent 60%);
-      top: -40px;
-      right: -20px;
-      opacity: 0.9;
+      width: 110px;
+      height: 110px;
+      background: radial-gradient(circle at center, #ffe9f5, transparent 60%);
+      top: -50px;
+      right: -30px;
+      opacity: 0.85;
     }
 
     .card-title {
@@ -203,9 +196,9 @@
 
     .movie-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 14px;
-      margin-top: 6px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 8px;
     }
 
     label {
@@ -223,13 +216,15 @@
       font-size: 0.85rem;
       margin-bottom: 8px;
       outline: none;
-      background: #f9f9ff;
+      background: #f7f7ff;
       color: var(--text);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
     }
 
     input:focus, select:focus, textarea:focus {
-      border-color: var(--accent);
+      border-color: var(--accent2);
       box-shadow: 0 0 0 2px #d7ddff;
+      background: #ffffff;
     }
 
     .inline {
@@ -241,13 +236,67 @@
       flex: 1;
     }
 
+    .radio-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px;
+      border-radius: 999px;
+      background: #eef0ff;
+      margin-bottom: 8px;
+    }
+
+    .radio-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.8rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+      color: var(--muted);
+    }
+
+    .radio-pill input {
+      width: auto;
+      margin: 0;
+    }
+
+    .radio-pill.active {
+      background: #ffffff;
+      color: var(--accent2);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.07);
+    }
+
     .movie-output {
       margin-top: 6px;
       font-size: 0.83rem;
       color: var(--muted);
       background: #f3f4ff;
-      border-radius: 10px;
-      padding: 8px 10px;
+      border-radius: 12px;
+      padding: 9px 11px;
+      border: 1px dashed #c5caf3;
+      min-height: 46px;
+    }
+
+    .movie-notice {
+      margin-top: 8px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .invite-banner {
+      margin-top: 10px;
+      padding: 9px 11px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #ffe3f0, #ffeecb);
+      font-size: 0.82rem;
+      color: #553344;
+      display: none;
+    }
+
+    .invite-banner.show {
+      display: block;
     }
 
     .timer-main {
@@ -256,7 +305,7 @@
     }
 
     .timer-main span {
-      color: var(--accent-dark);
+      color: var(--accent2);
       font-weight: 600;
     }
 
@@ -267,7 +316,7 @@
     }
 
     textarea {
-      min-height: 90px;
+      min-height: 100px;
       resize: vertical;
     }
 
@@ -285,16 +334,24 @@
     .btn-small {
       border: none;
       border-radius: 999px;
-      padding: 5px 10px;
-      font-size: 0.75rem;
-      background: #e7e9ff;
-      color: var(--muted);
+      padding: 6px 12px;
+      font-size: 0.78rem;
+      background: linear-gradient(135deg, var(--accent2), var(--accent1));
+      color: white;
       cursor: pointer;
       transition: all 0.2s;
+      box-shadow: 0 7px 16px rgba(0,0,0,0.15);
     }
 
     .btn-small:hover {
-      background: #dde0ff;
+      filter: brightness(1.05);
+      transform: translateY(-1px);
+    }
+
+    .btn-small.secondary {
+      background: #e7e9ff;
+      color: var(--muted);
+      box-shadow: none;
     }
 
     .note-preview {
@@ -307,15 +364,21 @@
       white-space: pre-wrap;
     }
 
+    .status-text {
+      margin-top: 6px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
     footer {
-      margin-top: 16px;
+      margin-top: 18px;
       text-align: center;
       font-size: 0.75rem;
       color: var(--muted);
     }
 
     footer span {
-      color: var(--accent-dark);
+      color: var(--accent1);
     }
 
     @media (max-width: 600px) {
@@ -331,11 +394,12 @@
 </head>
 <body>
   <div class="app">
-    <div class="floating-heart"></div>
+    <div class="blob pink"></div>
+    <div class="blob blue"></div>
 
     <header>
       <h1>Unund &amp; Nomuunzul</h1>
-      <p>One page for our movies, our time, and our notes.</p>
+      <p>One colorful page for our movies, our time, and our notes.</p>
       <div class="pill">
         <span class="flag">🇨🇦</span>
         <span>Vancouver</span>
@@ -347,9 +411,15 @@
     </header>
 
     <nav>
-      <button class="tab-btn active" data-view="movie">🎬 Movie night</button>
-      <button class="tab-btn" data-view="timer">⏳ Time together</button>
-      <button class="tab-btn" data-view="notes">📝 Daily note</button>
+      <button class="tab-btn active" data-view="movie">
+        <span class="dot"></span> 🎬 Movie night
+      </button>
+      <button class="tab-btn" data-view="timer">
+        <span class="dot"></span> ⏳ Time together
+      </button>
+      <button class="tab-btn" data-view="notes">
+        <span class="dot"></span> 📝 Daily note
+      </button>
     </nav>
 
     <main class="content">
@@ -358,11 +428,23 @@
         <div class="card">
           <div class="card-title">Movie night planner</div>
           <div class="card-subtitle">
-            Pick a time and see how it looks for both of you.
+            Pick a time, choose who’s inviting, and see the time for both sides.
           </div>
 
           <div class="movie-grid">
             <div>
+              <label>Who is inviting?</label>
+              <div class="radio-row" id="inviter-row">
+                <label class="radio-pill active">
+                  <input type="radio" name="inviter" value="Unund" checked />
+                  <span>Unund</span>
+                </label>
+                <label class="radio-pill">
+                  <input type="radio" name="inviter" value="Nomuunzul" />
+                  <span>Nomuunzul</span>
+                </label>
+              </div>
+
               <label for="movie-title">Movie / show</label>
               <input id="movie-title" type="text" placeholder="eg. Your Name, La La Land..." />
 
@@ -384,12 +466,20 @@
                 <option value="let's talk after the movie">Let’s talk after the movie</option>
                 <option value="comfort rewatch kind of night">Comfort rewatch kind of night</option>
               </select>
+
+              <p class="movie-notice">
+                When everything is filled, an invite message will pop up here and can also show as a browser notification (if allowed).
+              </p>
             </div>
 
             <div>
               <label>Our plan</label>
               <div class="movie-output" id="movie-output">
-                Once you fill in the details, this will show a simple invite you can send.
+                Fill the movie, date, and time to see the plan for Vancouver and Seoul.
+              </div>
+
+              <div class="invite-banner" id="invite-banner">
+                <!-- Filled by JS -->
               </div>
             </div>
           </div>
@@ -401,7 +491,7 @@
         <div class="card">
           <div class="card-title">Time since we started</div>
           <div class="card-subtitle">
-            A quiet counter of how long this has been us.
+            A quiet counter of how long this has been us (since 2025‑07‑19).
           </div>
 
           <div id="since-container">
@@ -416,7 +506,19 @@
         <div class="card">
           <div class="card-title">Today’s note</div>
           <div class="card-subtitle">
-            A small place to write one thing you want the other person to know today.
+            Write one thing you want the other person to know today, then send it to their email.
+          </div>
+
+          <label>Who should receive this note?</label>
+          <div class="radio-row" id="note-recipient-row">
+            <label class="radio-pill active">
+              <input type="radio" name="noteRecipient" value="Unund" checked />
+              <span>Send to Unund</span>
+            </label>
+            <label class="radio-pill">
+              <input type="radio" name="noteRecipient" value="Nomuunzul" />
+              <span>Send to Nomuunzul</span>
+            </label>
           </div>
 
           <label for="note-text">Your note</label>
@@ -424,12 +526,17 @@
 
           <div class="notes-meta">
             <div id="note-date"></div>
-            <button class="btn-small" type="button" id="note-clear">Clear note</button>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              <button class="btn-small secondary" type="button" id="note-clear">Clear</button>
+              <button class="btn-small" type="button" id="note-send">Send note</button>
+            </div>
           </div>
 
           <div class="note-preview" id="note-preview">
             What you type above will also appear here like a little message.
           </div>
+
+          <div class="status-text" id="note-status"></div>
         </div>
       </section>
     </main>
@@ -439,8 +546,31 @@
     </footer>
   </div>
 
+  <!-- EmailJS SDK (leave as is, only change PUBLIC KEY in JS below after you create it) -->
+  <script type="text/javascript"
+          src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+  </script>
+
   <script>
-    // ---------- TABS ----------
+    // ------------------ CONFIG: FILL THESE AFTER CREATING EMAILJS ------------------
+    // 1) Go to emailjs.com, create account.
+    // 2) Create a service (Gmail) -> put Service ID below.
+    // 3) Create a template (with variables like: from_name, to_email, message) -> Template ID.
+    // 4) Copy your Public key and put it below, and ALSO in emailjs.init.
+    const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";
+    const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
+    const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
+
+    // Initialize EmailJS (safe even if keys not set yet)
+    (function() {
+      if (EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY") {
+        emailjs.init({
+          publicKey: EMAILJS_PUBLIC_KEY,
+        });
+      }
+    })();
+
+    // ------------------ TABS ------------------
     const tabButtons = document.querySelectorAll('.tab-btn');
     const views = document.querySelectorAll('.view');
 
@@ -456,18 +586,58 @@
       });
     });
 
-    // ---------- MOVIE NIGHT ----------
+    // ------------------ HELPER: RADIO "PILLS" STYLE ------------------
+    function setupRadioRow(rowId) {
+      const row = document.getElementById(rowId);
+      const labels = row.querySelectorAll('.radio-pill');
+      labels.forEach(label => {
+        const input = label.querySelector('input');
+        input.addEventListener('change', () => {
+          labels.forEach(l => l.classList.remove('active'));
+          label.classList.add('active');
+        });
+      });
+    }
+
+    setupRadioRow('inviter-row');
+    setupRadioRow('note-recipient-row');
+
+    // ------------------ MOVIE NIGHT ------------------
     const movieTitleInput = document.getElementById('movie-title');
     const dateInput = document.getElementById('date');
     const timeInput = document.getElementById('time');
     const vibeSelect = document.getElementById('vibe');
     const movieOutput = document.getElementById('movie-output');
+    const inviteBanner = document.getElementById('invite-banner');
+
+    function getInviterName() {
+      const checked = document.querySelector('input[name="inviter"]:checked');
+      return checked ? checked.value : "Someone";
+    }
+
+    function showBrowserNotification(title, body) {
+      if (!("Notification" in window)) return;
+
+      if (Notification.permission === "granted") {
+        new Notification(title, { body });
+      } else if (Notification.permission !== "denied") {
+        Notification.requestPermission().then(permission => {
+          if (permission === "granted") {
+            new Notification(title, { body });
+          }
+        });
+      }
+    }
 
     function updateMovieInvite() {
       const title = movieTitleInput.value.trim();
       const date = dateInput.value;
       const time = timeInput.value;
       const vibe = vibeSelect.value;
+      const inviter = getInviterName();
+
+      inviteBanner.classList.remove('show');
+      inviteBanner.textContent = "";
 
       if (!date || !time) {
         movieOutput.textContent = "Pick a date and time to see the plan.";
@@ -475,7 +645,7 @@
       }
 
       const vancouverDate = new Date(date + 'T' + time + ':00');
-      const seoulDate = new Date(vancouverDate.getTime() + 17 * 60 * 60 * 1000); // 17h ahead[web:14]
+      const seoulDate = new Date(vancouverDate.getTime() + 17 * 60 * 60 * 1000); // Seoul ~17h ahead of Vancouver[web:24][web:21]
 
       const optionsDate = { year: 'numeric', month: 'short', day: 'numeric' };
       const optionsTime = { hour: '2-digit', minute: '2-digit' };
@@ -487,9 +657,21 @@
 
       const movieName = title || "our movie";
 
-      movieOutput.textContent =
+      const planText =
         `Plan: ${movieName} on ${vDateText} at ${vTimeText} (Vancouver) / ` +
         `${sDateText} at ${sTimeText} (Seoul) — ${vibe}.`;
+
+      movieOutput.textContent = planText;
+
+      const inviteText =
+        `You have been invited to a movie night by ${inviter}. ` +
+        `Movie: ${movieName}. Vancouver: ${vDateText} ${vTimeText}. ` +
+        `Seoul: ${sDateText} ${sTimeText}.`;
+
+      inviteBanner.textContent = inviteText;
+      inviteBanner.classList.add('show');
+
+      showBrowserNotification("Movie night invite", inviteText);
     }
 
     movieTitleInput.addEventListener('input', updateMovieInvite);
@@ -497,11 +679,11 @@
     timeInput.addEventListener('change', updateMovieInvite);
     vibeSelect.addEventListener('change', updateMovieInvite);
 
-    // ---------- TIMER ----------
+    // ------------------ TIMER ------------------
     const timerMain = document.getElementById('timer-main');
     const timerExtra = document.getElementById('timer-extra');
 
-    // Your real anniversary date: 2025-07-19
+    // Real anniversary date: 2025-07-19
     const anniversaryDate = new Date('2025-07-19T00:00:00');
 
     function updateTimer() {
@@ -535,11 +717,21 @@
     updateTimer();
     setInterval(updateTimer, 60 * 1000);
 
-    // ---------- NOTES ----------
+    // ------------------ NOTES + EMAILJS ------------------
     const noteText = document.getElementById('note-text');
     const notePreview = document.getElementById('note-preview');
     const noteDate = document.getElementById('note-date');
     const noteClear = document.getElementById('note-clear');
+    const noteSend = document.getElementById('note-send');
+    const noteStatus = document.getElementById('note-status');
+
+    const emailForUnund = "unund.boldkhuu@gmail.com";
+    const emailForNomuunzul = "nomuukamh@gmail.com";
+
+    function getNoteRecipient() {
+      const checked = document.querySelector('input[name="noteRecipient"]:checked');
+      return checked ? checked.value : "Unund";
+    }
 
     function updateNoteDate() {
       const now = new Date();
@@ -556,10 +748,47 @@
     noteClear.addEventListener('click', () => {
       noteText.value = "";
       updateNotePreview();
+      noteStatus.textContent = "";
     });
 
     updateNoteDate();
     updateNotePreview();
+
+    noteSend.addEventListener('click', () => {
+      const message = noteText.value.trim();
+      const recipient = getNoteRecipient();
+
+      if (!message) {
+        noteStatus.textContent = "Write a note before sending.";
+        return;
+      }
+
+      if (EMAILJS_SERVICE_ID === "YOUR_SERVICE_ID" ||
+          EMAILJS_TEMPLATE_ID === "YOUR_TEMPLATE_ID" ||
+          EMAILJS_PUBLIC_KEY === "YOUR_PUBLIC_KEY") {
+        noteStatus.textContent = "Email sending is not set up yet. Add your EmailJS IDs in the code first.";
+        return;
+      }
+
+      const toEmail = recipient === "Unund" ? emailForUnund : emailForNomuunzul;
+      const fromName = recipient === "Unund" ? "Nomuunzul" : "Unund";
+
+      noteStatus.textContent = "Sending note…";
+
+      const params = {
+        from_name: fromName,
+        to_email: toEmail,
+        message: message,
+      };
+
+      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params)
+        .then(() => {
+          noteStatus.textContent = "Note sent successfully.";
+        })
+        .catch(() => {
+          noteStatus.textContent = "Could not send note. Check EmailJS settings.";
+        });
+    });
   </script>
 </body>
 </html>
