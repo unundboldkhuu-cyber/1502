@@ -481,6 +481,11 @@
               <div class="invite-banner" id="invite-banner">
                 <!-- Filled by JS -->
               </div>
+
+              <div style="margin-top:8px; display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
+                <button class="btn-small" type="button" id="movie-send">Send movie invite</button>
+                <span class="status-text" id="movie-status"></span>
+              </div>
             </div>
           </div>
         </div>
@@ -546,27 +551,20 @@
     </footer>
   </div>
 
-  <!-- EmailJS SDK (leave as is, only change PUBLIC KEY in JS below after you create it) -->
+  <!-- EmailJS SDK -->
   <script type="text/javascript"
           src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
   </script>
 
   <script>
-    // ------------------ CONFIG: FILL THESE AFTER CREATING EMAILJS ------------------
-    // 1) Go to emailjs.com, create account.
-    // 2) Create a service (Gmail) -> put Service ID below.
-    // 3) Create a template (with variables like: from_name, to_email, message) -> Template ID.
-    // 4) Copy your Public key and put it below, and ALSO in emailjs.init.
-    const EMAILJS_SERVICE_ID = "service_tpdupss";
-    const EMAILJS_TEMPLATE_ID = "template_m9xxsac";
-    const EMAILJS_PUBLIC_KEY = "5KzPCfUR_lS0mAARp";
+    // ------------------ CONFIG: FILL WITH YOUR REAL VALUES ------------------
+    const EMAILJS_SERVICE_ID = "service_tpdupss";        // your real service id
+    const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";      // replace with template_xxx
+    const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";        // your public key
 
-    // Initialize EmailJS (safe even if keys not set yet)
     (function() {
       if (EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY") {
-        emailjs.init({
-          publicKey: EMAILJS_PUBLIC_KEY,
-        });
+        emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
       }
     })();
 
@@ -586,7 +584,7 @@
       });
     });
 
-    // ------------------ HELPER: RADIO "PILLS" STYLE ------------------
+    // ------------------ RADIO PILL HELPER ------------------
     function setupRadioRow(rowId) {
       const row = document.getElementById(rowId);
       const labels = row.querySelectorAll('.radio-pill');
@@ -609,6 +607,8 @@
     const vibeSelect = document.getElementById('vibe');
     const movieOutput = document.getElementById('movie-output');
     const inviteBanner = document.getElementById('invite-banner');
+    const movieSendBtn = document.getElementById('movie-send');
+    const movieStatus = document.getElementById('movie-status');
 
     function getInviterName() {
       const checked = document.querySelector('input[name="inviter"]:checked');
@@ -629,23 +629,16 @@
       }
     }
 
-    function updateMovieInvite() {
+    function buildMoviePlan(inviter) {
       const title = movieTitleInput.value.trim();
       const date = dateInput.value;
       const time = timeInput.value;
       const vibe = vibeSelect.value;
-      const inviter = getInviterName();
 
-      inviteBanner.classList.remove('show');
-      inviteBanner.textContent = "";
-
-      if (!date || !time) {
-        movieOutput.textContent = "Pick a date and time to see the plan.";
-        return;
-      }
+      if (!date || !time) return null;
 
       const vancouverDate = new Date(date + 'T' + time + ':00');
-      const seoulDate = new Date(vancouverDate.getTime() + 17 * 60 * 60 * 1000); // Seoul ~17h ahead of Vancouver[web:24][web:21]
+      const seoulDate = new Date(vancouverDate.getTime() + 17 * 60 * 60 * 1000); // ~17h ahead[web:24]
 
       const optionsDate = { year: 'numeric', month: 'short', day: 'numeric' };
       const optionsTime = { hour: '2-digit', minute: '2-digit' };
@@ -656,6 +649,37 @@
       const sTimeText = seoulDate.toLocaleTimeString('en-CA', optionsTime);
 
       const movieName = title || "our movie";
+
+      return {
+        movieName,
+        vibe,
+        vDateText,
+        vTimeText,
+        sDateText,
+        sTimeText,
+        vancouverDate,
+        seoulDate
+      };
+    }
+
+    function updateMovieInvite() {
+      inviteBanner.classList.remove('show');
+      inviteBanner.textContent = "";
+      movieStatus.textContent = "";
+
+      const inviter = getInviterName();
+      const plan = buildMoviePlan(inviter);
+
+      if (!plan) {
+        movieOutput.textContent = "Pick a date and time to see the plan.";
+        return;
+      }
+
+      const {
+        movieName, vibe,
+        vDateText, vTimeText,
+        sDateText, sTimeText
+      } = plan;
 
       const planText =
         `Plan: ${movieName} on ${vDateText} at ${vTimeText} (Vancouver) / ` +
@@ -679,11 +703,61 @@
     timeInput.addEventListener('change', updateMovieInvite);
     vibeSelect.addEventListener('change', updateMovieInvite);
 
+    // send movie invite email
+    movieSendBtn.addEventListener('click', () => {
+      const inviter = getInviterName();
+      const plan = buildMoviePlan(inviter);
+
+      if (!plan) {
+        movieStatus.textContent = "Pick a date and time first.";
+        return;
+      }
+
+      if (EMAILJS_SERVICE_ID === "YOUR_SERVICE_ID" ||
+          EMAILJS_TEMPLATE_ID === "YOUR_TEMPLATE_ID" ||
+          EMAILJS_PUBLIC_KEY === "YOUR_PUBLIC_KEY") {
+        movieStatus.textContent = "Email sending is not set up yet for invites.";
+        return;
+      }
+
+      const {
+        movieName, vibe,
+        vDateText, vTimeText,
+        sDateText, sTimeText
+      } = plan;
+
+      const toEmail = inviter === "Unund"
+        ? "nomuukamh@gmail.com"
+        : "unund.boldkhuu@gmail.com";
+
+      const emailMessage =
+        `${inviter} invited you to a movie night.\n\n` +
+        `Movie: ${movieName}\n` +
+        `Vancouver: ${vDateText} ${vTimeText}\n` +
+        `Seoul: ${sDateText} ${sTimeText}\n` +
+        `Note: ${vibe}`;
+
+      movieStatus.textContent = "Sending invite…";
+
+      const params = {
+        from_name: inviter,
+        to_email: toEmail,
+        message: emailMessage,
+      };
+
+      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params)
+        .then(() => {
+          movieStatus.textContent = "Movie invite sent.";
+        })
+        .catch(() => {
+          movieStatus.textContent = "Could not send invite. Check EmailJS settings.";
+        });
+    });
+
     // ------------------ TIMER ------------------
     const timerMain = document.getElementById('timer-main');
     const timerExtra = document.getElementById('timer-extra');
 
-    // Real anniversary date: 2025-07-19
     const anniversaryDate = new Date('2025-07-19T00:00:00');
 
     function updateTimer() {
